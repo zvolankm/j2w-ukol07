@@ -26,17 +26,17 @@ Připojovací URL, které se zadává při konfiguraci panelu Database v Intelli
    jen chyba, v aplikaci není žádný controller.
 1. Zprovozni si panel Database v IntelliJ Idea, ať si můžeš ověřit, co je v databázi. Připojovací URL, které se zadává při konfiguraci panelu Database v
    IntelliJ Idea, najdeš v souboru `src/main/resources/application.yaml`. Nejjednodušší je použít *DataSource from URL*.
-1. Vytvoř entitu `Post` a v ní vytvoř fieldy a properties odpovídající databázové tabulce. Nezpomeň na anotace `@Entity`, `@Id` a `@GeneratedValue`.
+1. Vytvoř entitu `Post` a v ní vytvoř fieldy a properties odpovídající databázové tabulce. Nezpomeň na anotace `@cz.czechitas.java2webapps.ukol8.entity`, `@Id` a `@GeneratedValue`.
 1. Vytvoř `JpaRepository` pro entitu `Post` (pojmenuj ji `PostRepository`).
-1. Vytvoř službu `PostService`, která bude pomoc `@Autowired` získávat `PostRepository`.
-1. Ve službě `PostService` vytvoř metodu `list()`, která bude vracet seznam všech postů (zatím bez stránkování a řazení). Dále tam vytvoř metodu
+1. Vytvoř službu `cz.czechitas.java2webapps.ukol8.service`, která bude pomoc `@Autowired` získávat `PostRepository`.
+1. Ve službě `cz.czechitas.java2webapps.ukol8.service` vytvoř metodu `list()`, která bude vracet seznam všech postů (zatím bez stránkování a řazení). Dále tam vytvoř metodu
    `singlePost(String slug)`, která najde jeden post podle zadaného `slug` a ten vrátí.
-1. Vytvoř controller a v něm dvě metody, pro zobrazení úvodí stránky se seznamem postů a pro zobrazení jednoho kompletního postu. Controller bude používat službu
-   `PostService`, kterou získá pomocí `@Autowired`. Nemusíš řešit případ, když si uživatel vymyslí URL postu, který neexistuje.
+1. Vytvoř controller a v něm dvě metody, pro zobrazení úvodí stránky se seznamem postů a pro zobrazení jednoho kompletního postu. cz.czechitas.java2webapps.ukol8.controller bude používat službu
+   `cz.czechitas.java2webapps.ukol8.service`, kterou získá pomocí `@Autowired`. Nemusíš řešit případ, když si uživatel vymyslí URL postu, který neexistuje.
 1. Vytvoř šablony pro obě metody controlleru. Na vzhledu nezáleží :-) Pro vložení HTML kódu z modelu do šablony je nutné místo použít ve Freemarkeru zápis
    `${value?no_esc}`, který zajistí, že Freemarker nebude převádět znaky `<` a `>`, ale vloží je bezezměny do výsledného souboru. Detaily najdeš v dokumentaci
    [no_esc](https://freemarker.apache.org/docs/ref_builtins_string.html#ref_builtin_no_esc) Freemarkeru.
-1. Uprav metodu `list()` v `PostService` tak, aby používala `Pageable` a omezila výsledek na 20 záznamů. Pro vytvoření správného `Pageable` použij statickou
+1. Uprav metodu `list()` v `cz.czechitas.java2webapps.ukol8.service` tak, aby používala `Pageable` a omezila výsledek na 20 záznamů. Pro vytvoření správného `Pageable` použij statickou
    metodu `PageRequest.of(0, 20)`. Vytvoř v repository metodu, která bude vracet Page<Post>, bude používat `Pageable` pro omezení počtu záznamů, načte pouze posty,
    které mají datum publikace a není v budoucnosti, a seřadí záznamy sestupně podle data publikace. Pro řazení se nebude používat položka `sort` z `Pageable` (to se používá v případě, kdy má uživoatel mít možnost měnit způsob řazení – my ale chceme zápisky seřadit vždy od nejnovějšího po nejstarší). Místo toho se použije správný název metody v repository (součástí názvu metody bude tedy text `OrderBy`).
 1. *Bonus*: Můžeš upravit šablonu pro výpis seznamu zápisků tak, aby bylo možné stránkami listovat. Nepoužije se ale číslování stránek, místo toho budou dole
@@ -51,6 +51,6 @@ Připojovací URL, které se zadává při konfiguraci panelu Database v Intelli
 * odkaz na stránku [Lekce 10](https://java.czechitas.cz/2022-podzim/java-2/lekce-10.html)
 * Java SE 17 [Javadoc](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/) – dokumentace všech tříd, které jsou součástí základní Javy ve verzi 17.
 * Dokumentace [Spring Boot](https://spring.io/projects/spring-boot#learn) – odsud je anotace `@SpringBootApplication` a třída `SpringApplication`.
-* Dokumentace [Spring Framework](https://spring.io/projects/spring-framework#learn) – odsud jsou anotace `@Controller`, `@GetRequest` a třída `ModelAndView`.
+* Dokumentace [Spring Framework](https://spring.io/projects/spring-framework#learn) – odsud jsou anotace `@cz.czechitas.java2webapps.ukol8.controller`, `@GetRequest` a třída `ModelAndView`.
 * Dokumentace [Freemarker](https://freemarker.apache.org/docs/) – šablonovací systém pro HTML použitý v projektu.
 * [Unsplash](https://unsplash.com) – obrázky a fotografie k použití zdarma
